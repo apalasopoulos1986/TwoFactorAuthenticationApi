@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -50,7 +51,7 @@ namespace TwoFactorAuthenticationApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
             if (env.IsDevelopment())
             {
@@ -58,10 +59,23 @@ namespace TwoFactorAuthenticationApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TwoFactorAuthenticationApi v1"));
             }
+            // migrate any database changes on startup (includes initial db creation)
+            dataContext.Database.Migrate();
 
             app.UseRouting();
+            app.UseCors(options =>
+                 options.WithOrigins("http://localhost:4200")
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
-            app.UseAuthorization();
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
