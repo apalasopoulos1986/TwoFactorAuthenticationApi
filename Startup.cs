@@ -36,18 +36,6 @@ namespace TwoFactorAuthenticationApi
         {   // use sql server db  
             services.AddDbContext<DataContext>();
             // use sql server db 
-            //services.AddAuthentication(options =>
-            // {
-            //   options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //   options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-            // })
-            //   .AddCookie()
-            //   .AddGoogle(options =>
-            //  {
-            //     options.ClientId = Configuration["Authentication:Google:ClientId"];
-            //     options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //   });
-            //services.AddRazorPages();
             services.AddCors();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -76,8 +64,6 @@ namespace TwoFactorAuthenticationApi
             dataContext.Database.Migrate();
 
             app.UseRouting();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
             app.UseCors(options =>
                  options.WithOrigins("http://localhost:29708")
                 .AllowAnyOrigin()
