@@ -20,5 +20,6 @@ namespace TwoFactorAuthenticationApi.Helpers
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }
