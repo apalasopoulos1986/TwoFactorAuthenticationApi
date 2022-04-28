@@ -21,7 +21,7 @@ namespace TwoFactorAuthenticationApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://localhost:4200"); ;
+                    .UseUrls("http://localhost:29708"); ;
                 });
     }
 }
