@@ -25,7 +25,10 @@ namespace TwoFactorAuthenticationApi.Services
         {
             _dataContext = dataContext;
         }
-
+        public void Seed()
+        {
+            _dataContext.Database.EnsureCreated();
+        }
         public void AddContact(Contact contact)
         {
             _dataContext.Add(contact);
