@@ -28,21 +28,6 @@ namespace TwoFactorAuthenticationApi.Helpers
                     }
                 ));
 
-             //Create Contact
-            CreateMap<ContactCreationRequestDTO, Contact>();
-
-            //Update Contact
-            CreateMap<ContactUpdateRequestDTO, Contact>()
-               .ForAllMembers(x => x.Condition(
-                   (src, dest, prop) =>
-                   {
-                        // ignore null & empty string properties
-                        if (prop == null) return false;
-                       if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string)prop)) return false;
-
-                       return true;
-                   }
-               ));
 
         }
     }

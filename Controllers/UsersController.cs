@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TwoFactorAuthenticationApi.Authorization;
 using TwoFactorAuthenticationApi.Helpers;
 using TwoFactorAuthenticationApi.Models.Users;

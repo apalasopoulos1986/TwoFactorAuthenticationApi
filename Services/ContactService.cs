@@ -17,7 +17,7 @@ namespace TwoFactorAuthenticationApi.Services
         void DeleteContactById(Guid id);
 
     }
-    public class ContactService
+    public class ContactService: IContactService
     {
         private readonly DataContext _dataContext;
 
