@@ -71,12 +71,26 @@ namespace TwoFactorAuthenticationApi.Controllers
                     _contactService.AddContact(newContact);
                     if (_contactService.SaveAll())
                     {
-                        var newPhoneNumber = new PhoneNumber();
+                        var newPhoneNumberHomePhone = new PhoneNumber();
+                        var newPhoneNumberMobilePhone = new PhoneNumber();
+                        var newPhoneNumberWorkPhone = new PhoneNumber();
+                        if (newContact.HomePhone != null)
+                        {
+                            newPhoneNumberHomePhone.Id = Guid.NewGuid();
+                            newPhoneNumberHomePhone.ValueOfNumber = newContact.HomePhone;
+                            _phoneNumberService.AddPhoneNumber(newPhoneNumberHomePhone);
+                        }
+                        if (newContact.MobilePhone != null)
+                        {
+                            newPhoneNumberMobilePhone.Id = Guid.NewGuid();
+                            newPhoneNumberMobilePhone.ValueOfNumber = newContact.MobilePhone;
+                            _phoneNumberService.AddPhoneNumber(newPhoneNumberMobilePhone);
+                        }
                         if (newContact.WorkPhone != null)
                         {
-                            newPhoneNumber.Id = Guid.NewGuid();
-                            newPhoneNumber.ValueOfNumber = newContact.WorkPhone;
-                            _phoneNumberService.AddPhoneNumber(newPhoneNumber);
+                            newPhoneNumberWorkPhone.Id = Guid.NewGuid();
+                            newPhoneNumberWorkPhone.ValueOfNumber = newContact.WorkPhone;
+                            _phoneNumberService.AddPhoneNumber(newPhoneNumberWorkPhone);
                         }
 
                         if (_phoneNumberService.SaveAll())
