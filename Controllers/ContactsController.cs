@@ -79,10 +79,9 @@ namespace TwoFactorAuthenticationApi.Controllers
                             _phoneNumberService.AddPhoneNumber(newPhoneNumber);
                         }
 
-
                         if (_phoneNumberService.SaveAll())
                         {
-                           // return Created($"phoneNumber/{newPhoneNumber.Id}", newPhoneNumber);
+                           
                         }
                         else
                         {
@@ -90,10 +89,7 @@ namespace TwoFactorAuthenticationApi.Controllers
                         }
                         return Created($"contacts/{newContact.Id}", newContact);
 
-                    }
-
-                    
-
+                    } 
 
                 }
 
