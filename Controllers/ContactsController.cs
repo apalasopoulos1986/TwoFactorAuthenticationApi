@@ -71,26 +71,28 @@ namespace TwoFactorAuthenticationApi.Controllers
                     _contactService.AddContact(newContact);
                     if (_contactService.SaveAll())
                     {
+                        var newPhoneNumber = new PhoneNumber();
+                        if (newContact.WorkPhone != null)
+                        {
+                            newPhoneNumber.Id = Guid.NewGuid();
+                            newPhoneNumber.ValueOfNumber = newContact.WorkPhone;
+                            _phoneNumberService.AddPhoneNumber(newPhoneNumber);
+                        }
+
+
+                        if (_phoneNumberService.SaveAll())
+                        {
+                           // return Created($"phoneNumber/{newPhoneNumber.Id}", newPhoneNumber);
+                        }
+                        else
+                        {
+                            return BadRequest($"Failed to create new phoneNumber");
+                        }
                         return Created($"contacts/{newContact.Id}", newContact);
+
                     }
 
-                    var newPhoneNumber = new PhoneNumber();
-                    if (newContact.WorkPhone != null)
-                    {
-                        newPhoneNumber.Id = Guid.NewGuid();
-                        newPhoneNumber.ValueOfNumber = newContact.WorkPhone;
-                        _phoneNumberService.AddPhoneNumber(newPhoneNumber);
-                    }
-
-
-                    if (_phoneNumberService.SaveAll())
-                    {
-                        return Created($"phoneNumber/{newPhoneNumber.Id}", newPhoneNumber);
-                    }
-                    else
-                    {
-                        return BadRequest($"Failed to create new phoneNumber");
-                    }
+                    
 
 
                 }
