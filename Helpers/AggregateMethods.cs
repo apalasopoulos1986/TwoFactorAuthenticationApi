@@ -24,16 +24,35 @@ namespace TwoFactorAuthenticationApi.Helpers
         }
         public void FillPhoneNumberValuesWithCriteria()
         {
-            List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
-            IEnumerable<Contact> contacts = _contactService.GetAllContacts();
-            foreach (var contact in contacts)
+            try
             {
-                if (contact.WorkPhone!=null)
+                IEnumerable<Contact> contacts = _contactService.GetAllContacts();
+                foreach (var contact in contacts)
                 {
-                    //phoneNumbers.Add(contact.WorkPhone);
+                    if (contact.WorkPhone != null)
+                    {
+                        var newPhoneNumber = new PhoneNumber();
+                        newPhoneNumber.Id= Guid.NewGuid();
+                        newPhoneNumber.ValueOfNumber = contact.WorkPhone;
+                        _phoneNumberService.AddPhoneNumber(newPhoneNumber);
+
+                        if (_phoneNumberService.SaveAll())
+                        {
+                          
+                        }
+
+                    }
+
                 }
 
             }
+            catch (Exception ex)
+            {
+
+               
+            }
+           // List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
+           
 
         }
     }
