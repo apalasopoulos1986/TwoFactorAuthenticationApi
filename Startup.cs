@@ -50,6 +50,7 @@ namespace TwoFactorAuthenticationApi
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IPhoneNumberService, PhoneNumberService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
