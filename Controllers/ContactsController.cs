@@ -19,13 +19,16 @@ namespace TwoFactorAuthenticationApi.Controllers
     public class ContactsController : ControllerBase
     {
         private IContactService _contactService;
+        private IPhoneNumberService _phoneNumberService;
         private readonly AppSettings _appSettings;
 
         public ContactsController(
             IContactService contactService,
+            IPhoneNumberService phoneNumberService,
             IOptions<AppSettings> appSettings)
         {
             _contactService = contactService;
+            _phoneNumberService = phoneNumberService;
             _appSettings = appSettings.Value;
 
         }
@@ -70,6 +73,26 @@ namespace TwoFactorAuthenticationApi.Controllers
                     {
                         return Created($"contacts/{newContact.Id}", newContact);
                     }
+
+                    var newPhoneNumber = new PhoneNumber();
+                    if (newContact.WorkPhone != null)
+                    {
+                        newPhoneNumber.Id = Guid.NewGuid();
+                        newPhoneNumber.ValueOfNumber = newContact.WorkPhone;
+                        _phoneNumberService.AddPhoneNumber(newPhoneNumber);
+                    }
+
+
+                    if (_phoneNumberService.SaveAll())
+                    {
+                        return Created($"phoneNumber/{newPhoneNumber.Id}", newPhoneNumber);
+                    }
+                    else
+                    {
+                        return BadRequest($"Failed to create new phoneNumber");
+                    }
+
+
                 }
 
             }
